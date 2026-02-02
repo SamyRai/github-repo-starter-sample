@@ -39,10 +39,10 @@ jobs:
         run: |
           if [ -f pyproject.toml ] || [ -f requirements.txt ]; then pytest -q; fi
 
-      - name: Instantiate script (dry-run)
+      - name: Instantiate script (dry-run with Python)
         run: |
-          if [ -x ./scripts/instantiate-template.sh ]; then ./scripts/instantiate-template.sh --dry-run; fi
+          if [ -f ./scripts/instantiate_template.py ]; then python3 ./scripts/instantiate_template.py --dry-run; fi
 
-      - name: Run instantiate script tests
+      - name: Run instantiate script tests (Python)
         run: |
-          if [ -f tests/test_instantiate.sh ]; then chmod +x tests/test_instantiate.sh && ./tests/test_instantiate.sh; fi
+          if [ -f tests/test_template_instantiation.py ]; then pytest -q tests/test_template_instantiation.py; fi
