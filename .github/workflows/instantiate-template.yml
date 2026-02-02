@@ -1,0 +1,73 @@
+name: Instantiate Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: 'Project name (e.g., "My Project")'
+        required: true
+      repo_name:
+        description: 'Repository name (e.g., "my-project")'
+        required: true
+      owner:
+        description: 'GitHub owner/organization (e.g., "my-org")'
+        required: true
+      year:
+        description: 'Copyright year (e.g., "2026")'
+        required: true
+        default: '2026'
+      maintainer_email:
+        description: 'Maintainer email'
+        required: true
+      support_email:
+        description: 'Support email'
+        required: true
+      security_email:
+        description: 'Security email'
+        required: true
+      github_username:
+        description: 'GitHub username/team for CODEOWNERS (e.g., "my-org/team")'
+        required: true
+      pgp_key_url:
+        description: 'PGP key URL (optional)'
+        required: false
+      pgp_key_id:
+        description: 'PGP key ID (optional)'
+        required: false
+
+jobs:
+  instantiate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run instantiation script
+        run: |
+          python scripts/instantiate_template.py \
+            --project-name "${{ github.event.inputs.project_name }}" \
+            --repo-name "${{ github.event.inputs.repo_name }}" \
+            --owner "${{ github.event.inputs.owner }}" \
+            --year "${{ github.event.inputs.year }}" \
+            --maintainer-email "${{ github.event.inputs.maintainer_email }}" \
+            --support-email "${{ github.event.inputs.support_email }}" \
+            --security-email "${{ github.event.inputs.security_email }}" \
+            --github-username "${{ github.event.inputs.github_username }}" \
+            ${{ github.event.inputs.pgp_key_url && format('--pgp-key-url "{0}"', github.event.inputs.pgp_key_url) || '' }} \
+            ${{ github.event.inputs.pgp_key_id && format('--pgp-key-id "{0}"', github.event.inputs.pgp_key_id) || '' }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: instantiate template with project-specific values" || echo "No changes to commit"
+          git push
