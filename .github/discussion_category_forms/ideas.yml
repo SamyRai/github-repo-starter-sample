@@ -1,0 +1,11 @@
+name: "Ideas & Proposals"
+description: "Share ideas or proposals for the project"
+body:
+  - type: input
+    attributes:
+      label: "Title"
+      description: "Short title for the idea"
+  - type: textarea
+    attributes:
+      label: "Describe the idea"
+      description: "Explain the motivation and possible approach"

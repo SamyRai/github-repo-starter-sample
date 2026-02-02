@@ -1,0 +1,31 @@
+name: "Bug report"
+about: "File a bug so we can reproduce and fix it"
+description: "Use this template to report bugs"
+title: "[Bug] {short description}"
+labels: [bug, status: needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for taking the time to report a bug. Please include a minimal reproducible example."
+  - type: input
+    id: steps
+    attributes:
+      label: "Steps to reproduce"
+      description: "List the steps required to reproduce the issue"
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: "Expected behavior"
+      required: true
+  - type: input
+    id: actual
+    attributes:
+      label: "Actual behavior"
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: "Environment"
+      description: "OS, versions, etc"
+      required: false

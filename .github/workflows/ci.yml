@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Node dependencies
+        run: |
+          if [ -f package.json ]; then npm ci; fi
+
+      - name: Run Node tests
+        run: |
+          if [ -f package.json ]; then npm test; fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+
+      - name: Run Python tests
+        run: |
+          if [ -f pyproject.toml ] || [ -f requirements.txt ]; then pytest -q; fi
+
+      - name: Instantiate script (dry-run)
+        run: |
+          if [ -x ./scripts/instantiate-template.sh ]; then ./scripts/instantiate-template.sh --dry-run; fi
+
+      - name: Run instantiate script tests
+        run: |
+          if [ -f tests/test_instantiate.sh ]; then chmod +x tests/test_instantiate.sh && ./tests/test_instantiate.sh; fi

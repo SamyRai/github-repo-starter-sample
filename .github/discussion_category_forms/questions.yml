@@ -1,0 +1,12 @@
+name: "Questions / Support"
+description: "Use this form for questions or support requests"
+body:
+  - type: textarea
+    attributes:
+      label: "Describe your question"
+      description: "Provide steps, environment, and any logs or error messages"
+      placeholder: "What happened?"
+  - type: input
+    attributes:
+      label: "Relevant links (optional)"
+      description: "Link to code, issue, or PR"

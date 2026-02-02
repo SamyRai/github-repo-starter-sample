@@ -1,0 +1,9 @@
+# Default owners for everything
+
+- @your-username
+
+## Owners by path (adjust to your team handles)
+
+/docs/ @your-username
+/.github/ @your-username
+/src/ @your-username

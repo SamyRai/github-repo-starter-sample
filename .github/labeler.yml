@@ -1,0 +1,9 @@
+# Labeler configuration: map labels to path globs
+bug:
+  - "**/src/**"
+enhancement:
+  - "**/features/**"
+documentation:
+  - "**/docs/**"
+security:
+  - "**/security/**"

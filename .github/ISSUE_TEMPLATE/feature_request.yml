@@ -1,0 +1,20 @@
+name: "Feature request"
+about: "Propose a new feature and why it matters"
+description: "Suggest a new feature"
+title: "[Feature] {short description}"
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: "Describe the feature, use case, and any alternatives considered."
+  - type: input
+    id: proposal
+    attributes:
+      label: "Proposed solution"
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: "Rationale"
+      description: "Why is this useful?"
+      required: false
